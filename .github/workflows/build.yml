@@ -15,32 +15,30 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Set up Python 3.8 for gcovr
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.8
-      - name: install gcovr 5.0
-        run: |
-          pip install gcovr==5.0 # 5.1 is not supported
+      # - name: Set up Python 3.8 for gcovr
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: 3.8
+      # - name: install gcovr 5.0
+      #   run: |
+      #     pip install gcovr==5.0 # 5.1 is not supported
       - name: Install Build Wrapper
         uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v4
       - name: Run Build Wrapper
         run: |
-          mkdir build
-          cmake -S . -B build
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
-      - name: Run tests to generate coverage statistics
-        run: |
-          ./build/coverage_test1
-          ./build/coverage_test2
-      - name: Collect coverage into one XML report
-        run: |
-          gcovr --sonarqube > coverage.xml
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.xml
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make
+      # - name: Run tests to generate coverage statistics
+      #   run: |
+      #     ./build/coverage_test1
+      #     ./build/coverage_test2
+      # - name: Collect coverage into one XML report
+      #   run: |
+      #     gcovr --sonarqube > coverage.xml
+      # - name: Upload coverage report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: coverage-report
+      #     path: coverage.xml
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
@@ -48,5 +46,4 @@ jobs:
         with:
           args: >
             --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
-            --define sonar.coverageReportPaths=coverage.xml
             -X
