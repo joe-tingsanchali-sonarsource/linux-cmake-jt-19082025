@@ -14,7 +14,7 @@ image:{img-qg-status}[Quality Gate Status,link={uri-qg-status}]
 NOTE: This simple example aims at demonstrating code coverage in action. It explains how to add coverage on a project for which the analysis is already configured. Analysis configuration examples are available <<code-description,here>>. +
 Adding code coverage is done the same way regardless of whether you use the Build Wrapper or a Compilation Database to configure the analysis.
 
-To get coverage and feed it to the sonar-scanner, use the following procedure.
+To get coverage and feed it to the `sonar-scanner` command, use the following procedure.
 
 . Add `--coverage` compilation flag to instrument the binaries
 . Run the test binaries to count covered lines
