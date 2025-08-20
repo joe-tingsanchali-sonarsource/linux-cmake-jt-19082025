@@ -1,10 +1,11 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 // A simple placeholder for T_memcpy, assuming it's a function similar to memcpy
-void T_memcpy(void *dest, const void *src, size_t n) {
-    memcpy(dest, src, n);
+void* T_memcpy(void* dest, const void* source, uint32_t length) {
+    return (void*) (memcpy((void*) dest, (const void*) source, (uint32_t) length));
 }
 
 // Global variable declarations to make the code snippet compilable.
